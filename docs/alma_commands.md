@@ -24,43 +24,60 @@ Studio e usarlo in autonomia sul proprio ambiente (modello "prodotto").
 | Campo | Valore |
 |---|---|
 | **Nome** | `demo-prodotto` |
-| **Descrizione** | Genera uno script di demo per proporre Inlay Studio come prodotto installabile/licenziabile presso il cliente. |
+| **Descrizione** | Genera presentazione + demo live per proporre Inlay Studio come prodotto installabile/licenziabile presso il cliente. |
 | **Terminale** | Eredita |
 
 **Prompt** (usa `{{args}}` per cliente/contesto passato dopo il comando,
 es. `/demo-prodotto Banca Alfa, settore finance, interlocutore architetto`):
 
 ```
-Prepara uno script di presentazione per il cliente {{args}} con l'obiettivo
-di proporre Inlay Studio come prodotto che il cliente potrà installare e
-usare in autonomia sul proprio ambiente (modello "prodotto": licenza, non
-solo servizio ENG).
+Prepara il materiale per presentare al cliente {{args}} Inlay Studio come
+prodotto che potrà installare e usare in autonomia sul proprio ambiente
+(modello "prodotto": licenza, non solo servizio ENG). L'output ha SEMPRE
+due parti distinte, non una sola: una presentazione e una demo live. Non
+fermarti alla prima.
 
 Prima di scrivere, verifica di avere questi elementi; se mancano, chiedili
 esplicitamente invece di assumerli:
 - Settore e contesto del cliente (cosa fa, dimensione, maturità digitale).
-- Ruolo e profilo dell'interlocutore principale in demo (Business Analyst,
-  Architetto, Project Manager, decision maker non tecnico...).
-- Obiettivo concreto della demo (prima presentazione esplorativa, pilot
-  proposal, rinnovo/estensione...).
-- Documentazione o asset di riferimento del cliente da richiamare nella
-  demo, se esiste.
+- Ruolo e profilo dell'interlocutore principale (Business Analyst,
+  Architetto, sviluppatore/tech lead, Project Manager, decision maker non
+  tecnico...): determina quanto la demo sarà pratica vs narrativa.
+- Obiettivo concreto dell'incontro (prima presentazione esplorativa,
+  pilot proposal, rinnovo/estensione...).
+- Documentazione o asset di riferimento del cliente da richiamare, se
+  esiste.
 
-Struttura l'output così:
+PARTE A — Presentazione (slide outline, una riga di contenuto per slide,
+pensata per essere rifinita con la skill "slides"):
 1. Apertura — il problema/bisogno del cliente in 2-3 frasi, senza gergo
    tecnico superfluo.
 2. Cos'è Inlay Studio — posizionamento nella suite INLAY, cosa copre
-   (Concept → Activity/Work Package) e cosa no, tarato sul livello
-   tecnico dell'interlocutore.
+   (Concept → Activity/Work Package) e cosa no.
 3. Perché per loro — 3-4 vantaggi concreti legati al contesto fornito,
    non generici.
-4. Come funziona in pratica — fonti, chat RAG, skill di fase, workflow,
-   in un linguaggio adeguato al pubblico (meno architetturale per un
-   decision maker, più dettagliato per un architetto).
-5. Installazione e autonomia d'uso — requisiti (WSL2/Podman o macOS),
+4. Installazione e autonomia d'uso — requisiti (WSL2/Podman o macOS),
    cosa resta in gestione al cliente, differenza con l'uso "a servizio"
    di ENG.
-6. Prossimi passi proposti.
+5. Prossimi passi proposti.
+
+PARTE B — Demo live (sequenza pratica, non slide): descrivi passo per
+passo cosa aprire e mostrare dentro Inlay Studio, schermata per
+schermata, con la frase chiave da dire mentre lo si fa. Calibrala sul
+profilo dell'interlocutore con questo criterio:
+- Se è tecnico (sviluppatore, architetto, tech lead): trattalo come si
+  mostrerebbe un IDE a uno sviluppatore — non se ne parla, lo si apre e
+  si lavora davanti a lui. Riduci al minimo la narrazione, massimizza
+  "mani sul prodotto": apri un progetto reale/di esempio, mostra Fonti
+  indicizzate, lancia una skill o un comando, mostra l'output generato,
+  apri un Workflow e un run. Il valore deve emergere dall'uso diretto,
+  non dalla descrizione.
+- Se è un profilo business/decision maker non tecnico: più narrazione,
+  meno click; mostra 1-2 momenti chiave del prodotto in azione (non
+  l'intero flusso tecnico) per ancorare i vantaggi a qualcosa di visto,
+  non solo raccontato.
+Ogni passo della demo deve indicare: cosa cliccare/aprire, cosa dire,
+cosa far notare nel risultato.
 
 Regole:
 - Basati solo sui fatti di prodotto noti/documentati; se una domanda del
@@ -94,11 +111,12 @@ diversamente confermato).
 obiettivo: dimostrare velocità di analisi`):
 
 ```
-Prepara materiale di presentazione per il cliente {{args}} con l'obiettivo
-di dimostrare il valore di farsi affiancare da ENG, che userà Inlay
-Studio internamente per lavorare un asset del cliente (modello
-"servizio": il prodotto non viene installato né consegnato al cliente,
-resta in infrastruttura ENG).
+Prepara il materiale per dimostrare al cliente {{args}} il valore di
+farsi affiancare da ENG, che userà Inlay Studio internamente per
+lavorare un asset del cliente (modello "servizio": il prodotto non
+viene installato né consegnato al cliente, resta in infrastruttura
+ENG). L'output ha SEMPRE due parti distinte, non una sola: una
+presentazione e una demo live. Non fermarti alla prima.
 
 Prima di scrivere, verifica di avere questi elementi; se mancano,
 chiedili esplicitamente:
@@ -106,9 +124,11 @@ chiedili esplicitamente:
   processo) o un suo estratto rappresentativo.
 - L'obiettivo della dimostrazione (velocità, qualità, sicurezza, costo,
   o una combinazione).
-- Il profilo dell'interlocutore (tecnico o business).
+- Il profilo dell'interlocutore (tecnico — es. sviluppatore/architetto —
+  o business): determina quanto la demo sarà pratica vs narrativa.
 
-Struttura l'output così:
+PARTE A — Presentazione (slide outline, una riga di contenuto per slide,
+pensata per essere rifinita con la skill "slides"):
 1. Apertura — il problema del cliente collegato all'asset fornito.
 2. Cosa abbiamo fatto — in sintesi, come ENG ha lavorato quell'asset con
    Inlay Studio (fasi toccate: concept/analisi/design/WBS...), senza
@@ -117,11 +137,26 @@ Struttura l'output così:
    (confronto prima/dopo, se possibile).
 4. Perché è stato più veloce/solido/sicuro grazie a noi — il
    differenziale è la suite proprietaria di delivery di ENG e il
-   know-how, non genericamente "l'intelligenza artificiale" (che ha già
-   chiunque).
+   know-how, non genericamente "l'intelligenza artificiale".
 5. Cosa resta a voi, cosa resta a noi — chiarisci che l'ambiente Inlay
    resta ENG; il cliente riceve l'output del lavoro, non lo strumento.
 6. Prossimi passi proposti.
+
+PARTE B — Demo live (sequenza pratica, non slide): descrivi passo per
+passo cosa mostrare — sull'asset reale del cliente, se disponibile,
+altrimenti su un esempio equivalente — con la frase chiave da dire
+mentre lo si fa. Calibrala sul profilo dell'interlocutore:
+- Se è tecnico: trattalo come si mostrerebbe un IDE a uno sviluppatore —
+  apri davvero il progetto in Inlay Studio, mostra l'asset del cliente
+  caricato come fonte, lancia la skill/fase pertinente (es. analisi o
+  design) e mostra l'output reale generato a partire da quell'asset.
+  Riduci la narrazione, massimizza "mani sul prodotto" sul loro
+  materiale concreto.
+- Se è business/decision maker: meno click, più confronto visivo
+  prima/dopo sul loro asset, per ancorare i vantaggi a qualcosa di
+  visto, non solo raccontato.
+Ogni passo della demo deve indicare: cosa aprire/mostrare, cosa dire,
+cosa far notare nel risultato.
 
 Regole:
 - Non proporre MAI, in questo scenario, l'installazione di Inlay Studio
