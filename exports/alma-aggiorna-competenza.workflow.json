@@ -1,0 +1,26 @@
+{
+  "name": "Alma — aggiornamento competenza Inlay Studio",
+  "goal": "Verifica se la cartella locale del repository DevExpPlatform/project-am-inlay-docs-portal esiste nell'ambiente corrente. Se non esiste, clonala con: gh repo clone DevExpPlatform/project-am-inlay-docs-portal. Se esiste, registra l'hash del commit corrente con `git log -1 --format=%H` (hash \"prima\"), esegui `git pull`, poi registra di nuovo l'hash (hash \"dopo\"). Se i due hash coincidono, segnala esplicitamente \"nessun aggiornamento disponibile\" e termina qui senza eseguire gli step successivi.",
+  "steps": [
+    {
+      "type": "agent",
+      "systemPrompt": "Confronta i file cambiati tra l'hash \"prima\" e l'hash \"dopo\" con: git diff --name-only <hash_prima> <hash_dopo> -- docs/. Per ciascun file modificato dentro docs/inlay-studio/ o docs/intro.md, produci un riassunto puntuale delle novità rilevanti per demo e posizionamento prodotto: nuove skill, nuove fasi della pipeline, modifiche architetturali, nuovi MCP server, cambi nel modello di go-to-market (servizio/prodotto). Se le modifiche sono solo cosmetiche/non rilevanti per una demo cliente, dillo esplicitamente e segnala che non serve aggiornare la persona di Alma.",
+      "allowCodeExecution": true,
+      "requireApproval": false
+    },
+    {
+      "type": "approval",
+      "systemPrompt": "Mostra all'utente il riepilogo delle novità rilevanti prodotto allo step precedente e chiedi conferma esplicita prima di modificare docs/alma_persona.md."
+    },
+    {
+      "type": "agent",
+      "systemPrompt": "Aggiorna docs/alma_persona.md solo nelle sezioni toccate dalle novità confermate dall'utente (es. tabella prodotti INLAY, sezione Architettura, sezione go-to-market) — non riscrivere il resto del file. Copia il file aggiornato anche in .atlas/alma_persona.md (identico, è l'unica copia indicizzata da Fonti). Poi esegui: git add -A && git commit -m \"docs: aggiornamento competenza Alma da project-am-inlay-docs-portal@<hash_dopo>\" && git push. Conferma all'utente l'hash del commit e ricorda che per vedere la modifica sul proprio PC serve un git pull locale del repo alma-inlay-champion.",
+      "allowCodeExecution": true,
+      "requireApproval": false
+    }
+  ],
+  "schedule": {
+    "enabled": false,
+    "note": "Sconsigliata: lo step di approvazione blocca un run schedulato senza nessuno collegato. Vedi docs/alma_workflow.md."
+  }
+}
